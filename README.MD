@@ -11,7 +11,7 @@ Open the index.html file in a browser. This should put in cache some libraries u
 
 ### Launch
 
-Open the index.html file in Google Object
+Open the index.html file in Google Chrome or some other advanced browser.
 
 > If you use the same browser then the one you used for dowload, the libraries are cached and you should be able to use the app without internet
 
