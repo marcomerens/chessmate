@@ -1,0 +1,444 @@
+.container(style="width:1200px")
+    .text-center
+        h2 Chessmate
+        img(src="https://npr.brightspotcdn.com/dd/83/88a67df041d58143a5019c70bf12/120320-provided-chessboard.jpg",width="400px")
+    p This is Chessmate, the world best ever chess tournament application. Enjoy!
+    p This is version 1.0.0. Have a look at the 
+        a(href="documentation.txt",target="_blank") documentation
+        |  to know what this release contains and how to use the app.
+
+    hr
+    p Players 
+        //button#loadit.btn.btn-sm.btn-light Load from memory
+    ul.nav.nav-tabs
+        li.nav-item
+            a.divsel.nav-link.active(aria-current="page",division="A",href="#") Div. A - New to chess
+        li.nav-item
+            a.divsel.nav-link(aria-current="page",division="B",href="#") Div. B - Beginner
+        li.nav-item
+            a.divsel.nav-link(aria-current="page",division="C",href="#") Div. C - Intermediate
+        li.nav-item
+            a.divsel.nav-link(aria-current="page",division="D",href="#") Div. D - Advanced
+
+
+    .division(division="A")
+        .form-check.form-switch
+            input.selmode.form-check-input(type="checkbox",role="switch")
+            label.form-check-label Return games
+        .form-check.form-switch
+            input.skipplayoffs.form-check-input(type="checkbox",role="switch")
+            label.form-check-label Skip playoffs
+
+
+        .row.playerrow
+            .col-3.plusbutton
+                h1: i.addgroup.fas.fa-plus-circle
+    .division(division="B",style="display:none")
+        .form-check.form-switch
+            input.selmode.form-check-input(type="checkbox",role="switch")
+            label.form-check-label Return games
+        .form-check.form-switch
+            input.skipplayoffs.form-check-input(type="checkbox",role="switch",selected)
+            label.form-check-label Skip playoffs
+        .row.playerrow
+            .col-3.plusbutton
+                h1: i.addgroup.fas.fa-plus-circle
+    .division(division="C",style="display:none")
+        .form-check.form-switch
+            input.selmode.form-check-input(type="checkbox",role="switch")
+            label.form-check-label Return games
+        .form-check.form-switch
+            input.skipplayoffs.form-check-input(type="checkbox",role="switch")
+            label.form-check-label Skip playoffs
+        .row.playerrow
+            .col-3.plusbutton
+                h1: i.addgroup.fas.fa-plus-circle
+    .division(division="D",style="display:none")
+        .form-check.form-switch
+            input.selmode.form-check-input(type="checkbox",role="switch")
+            label.form-check-label Return games
+        .form-check.form-switch
+            input.skipplayoffs.form-check-input(type="checkbox",role="switch")
+            label.form-check-label Skip playoffs
+        .row.playerrow
+            .col-3.plusbutton
+                h1: i.addgroup.fas.fa-plus-circle
+    hr
+    button#generate.btn.btn-danger Start tournament
+    //button#generateplayoffs.btn.btn-warning Generate playoffs
+    hr
+    #qualifierdashboard(style="display:none")
+        h2.text-center TOURNAMENT
+        #graphcontainer(style="width:600px;height:200px;margin:auto")
+        h2#message.alert.alert-info.text-center Let's Play Chess
+
+        //p Currently playing
+        #active.round
+            .gameblocks(phase="active")
+        button#togglemore.btn.btn-sm.btn-link: em Toggle planned/completed
+        #hideit(style="display:none")
+            p Coming up
+            #planned.round
+                .gameblocks(phase="planned")
+            p Completed
+            #completed.round
+                .gameblocks(phase="completed")
+
+        .someblock
+            .badge.text-bg-secondary.masterblock(style='display:none;text-align:center')
+                span.fieldblock.someplayer(name="player1",status="") Marco 
+                span  
+                i.fas.fa-play-circle.launcher(style='display:none')
+                i.fas.fa-minus.planned
+                i.fas.fa-check-circle.apply(style='display:none')
+                span  
+                span.fieldblock.someplayer(name="player2",status="")  Paul
+                br
+                span(style='font-size:8px;font-style:italic')
+                    span Div. 
+                    span.fieldblock(name="division") A
+                    span  
+                    span.fieldblock(name="phase") Group 1
+    .somemaster
+        .somemaster
+            .col-4.gameblock.masterblockold(style="display:none;padding:5px")
+                .card
+                    .card-body
+                        .row
+                            .col-6
+                                div
+                                    span Div. 
+                                    span.fieldblock(name="division") A
+                                    br
+                                    span Group 
+                                    span.fieldblock(name="group") 1
+                                    br
+                                    span.fieldblock(name="phase") Qualifiers
+                                    
+                            .col-6
+                                div
+                                    i.player1dot.playerdot.fas.fa-circle(player="player1",status="")
+                                    strong  
+                                    strong.fieldblock(name="player1")  Marco
+                                    br
+                                    span.text-center vs 
+                                    i.fas.fa-check-circle.apply(style="color:lightgray;display:none",disabled)
+                                    i.fas.fa-play-circle.launcher(style="color:blue;display:none",disabled)
+                                    
+                                    br
+                                    i.player2dot.playerdot.fas.fa-circle(player="player2",status="")
+                                    strong  
+                                    strong.fieldblock(name="player2")  Mats
+                    .card-footer.text-bg-light.text-center
+                        span.fieldblock(name="result") Marco wins
+
+    #standingsdiv.row
+        .col-3.standings(division="A",style="display:none")
+            .card
+                .card-header
+                    h5 Div A - New to chess
+                .card-body
+                    p.message.text-center QUALIFIERS
+                    p.text-center.launchplayoffs(style='display:none'): button.btn.btn-sm.btn-info Launch 
+                        i.fas.fa-play-circle
+                    .gameblocks(phase="active",division="A")
+                    .playoffs(style="display:none")
+                        .row(style='font-size:10px;text-align:center')
+                            .col-4
+                                p Quarter
+                            .col-4
+                                p Semi-finals
+                            .col-4
+                                p Finals
+                        .row
+                            .col-4
+                                p.quarter(game="Aq1")
+                                    span.playoffplayer(seed="1",player="") Bye
+                                    span  vs 
+                                    span.playoffplayer(seed="8",player="") Bye
+                                p.quarter(game="Aq2")
+                                    span.playoffplayer(seed="5",player="") Bye
+                                    span  vs 
+                                    span.playoffplayer(seed="4",player="") Bye
+                            .col-4
+                                p.semi(game="As1")
+                                    span.playoffplayer(winner='Aq1',player="Aq1") Q1
+                                    span  vs 
+                                    span.playoffplayer(winner="Aq2",player="Aq2") Q2
+                            .col-4
+                                p.final(game="Af")
+                                    span.playoffplayer(winner="As1",player="As1") S1
+                                    span  vs 
+                                    span.playoffplayer(winner="As2",player="As2") S2
+                        .row
+                            .col-4
+                                p.quarter(game="Aq3") 
+                                    span.playoffplayer(seed="6",player="") Bye
+                                    span  vs 
+                                    span.playoffplayer(seed="3",player="") Bye
+                                p.quarter(game="Aq4")
+                                    span.playoffplayer(seed="7",player="") Bye
+                                    span  vs 
+                                    span.playoffplayer(seed="2",player="") Bye
+                            .col-4
+                                p.semi(game='As2')
+                                    span.playoffplayer(winner="Aq3",player="Aq3") Q3
+                                    span  vs 
+                                    span.playoffplayer(winner="Aq4",player="Aq4") Q4
+                            .col-4
+                                p.place3(game="A3p")
+                                    span.playoffplayer(winner="Al1",player="Al1") L1
+                                    span  vs 
+                                    span.playoffplayer(winner="Al2",player="Al2") L2
+                                p(style='font-size:10px;text-align:center') 3rd Place
+     
+                                
+                    table.statstable.table.table-sm.stattablemaster
+                        thead
+                            tr
+                                th.tabgroupname(colspan=4,style='text-align:center') Group 1
+                            tr
+                                th #
+                                th Name
+                                th W/D/L
+                                th Pts
+                        tbody
+                    .stattablediv
+        .col-3.standings(division="B",style="display:none")
+            .card
+                .card-header
+                    h5 Div B - Beginner
+                .card-body
+                    p.message.text-center QUALIFIERS
+                    p.text-center.launchplayoffs(style='display:none'): button.btn.btn-sm.btn-info Launch 
+                        i.fas.fa-play-circle
+                    .gameblocks(phase="active",division="B")
+                    .playoffs(style="display:none")
+                        .row(style='font-size:10px;text-align:center')
+                            .col-4
+                                p Quarter
+                            .col-4
+                                p Semi-finals
+                            .col-4
+                                p Finals
+                        .row
+                            .col-4
+                                p.quarter(game="Bq1")
+                                    span.playoffplayer(seed="1",player="") Bye
+                                    span  vs 
+                                    span.playoffplayer(seed="8",player="") Bye
+                                p.quarter(game="Bq2")
+                                    span.playoffplayer(seed="5",player="") Bye
+                                    span  vs 
+                                    span.playoffplayer(seed="4",player="") Bye
+                            .col-4
+                                p.semi(game="Bs1")
+                                    span.playoffplayer(winner='Bq1',player="Bq1") Q1
+                                    span  vs 
+                                    span.playoffplayer(winner="Bq2",player="Bq2") Q2
+                            .col-4
+                                p.final(game="Bf")
+                                    span.playoffplayer(winner="Bs1",player="Bs1") S1
+                                    span  vs 
+                                    span.playoffplayer(winner="Bs2",player="Bs2") S2
+                        .row
+                            .col-4
+                                p.quarter(game="Bq3") 
+                                    span.playoffplayer(seed="6",player="") Bye
+                                    span  vs 
+                                    span.playoffplayer(seed="3",player="") Bye
+                                p.quarter(game="Bq4")
+                                    span.playoffplayer(seed="7",player="") Bye
+                                    span  vs 
+                                    span.playoffplayer(seed="2",player="") Bye
+                            .col-4
+                                p.semi(game='Bs2')
+                                    span.playoffplayer(winner="Bq3",player="Bq3") Q3
+                                    span  vs 
+                                    span.playoffplayer(winner="Bq4",player="Bq4") Q4
+                            .col-4
+                                p.place3(game="B3p")
+                                    span.playoffplayer(winner="Bl1",player="Bl1") L1
+                                    span  vs 
+                                    span.playoffplayer(winner="Bl2",player="Bl2") L2
+                                p(style='font-size:10px;text-align:center') 3rd Place
+
+                                
+                    table.statstable.table.table-sm.stattablemaster
+                        thead
+                            tr
+                                th.tabgroupname(colspan=4,style='text-align:center') Group 1
+                            tr
+                                th #
+                                th Name
+                                th W/D/L
+                                th Pts
+                        tbody
+                    .stattablediv
+        .col-3.standings(division="C",style="display:none")
+            .card
+                .card-header
+                    h5 Div C - Intermediate
+                .card-body
+                    p.message.text-center QUALIFIERS
+                    p.text-center.launchplayoffs(style='display:none'): button.btn.btn-sm.btn-info Launch 
+                        i.fas.fa-play-circle
+                    .gameblocks(phase="active",division="C")
+
+                    .playoffs(style="display:none")
+                        .row(style='font-size:10px;text-align:center')
+                            .col-4
+                                p Quarter
+                            .col-4
+                                p Semi-finals
+                            .col-4
+                                p Finals
+                        .row
+                            .col-4
+                                p.quarter(game="Cq1")
+                                    span.playoffplayer(seed="1",player="") Bye
+                                    span  vs 
+                                    span.playoffplayer(seed="8",player="") Bye
+                                p.quarter(game="Cq2")
+                                    span.playoffplayer(seed="5",player="") Bye
+                                    span  vs 
+                                    span.playoffplayer(seed="4",player="") Bye
+                            .col-4
+                                p.semi(game="Cs1")
+                                    span.playoffplayer(winner='Cq1',player="Cq1") Q1
+                                    span  vs 
+                                    span.playoffplayer(winner="Cq2",player="Cq2") Q2
+                            .col-4
+                                p.final(game="Cf")
+                                    span.playoffplayer(winner="Cs1",player="Cs1") S1
+                                    span  vs 
+                                    span.playoffplayer(winner="Cs2",player="Cs2") S2
+                        .row
+                            .col-4
+                                p.quarter(game="Cq3") 
+                                    span.playoffplayer(seed="6",player="") Bye
+                                    span  vs 
+                                    span.playoffplayer(seed="3",player="") Bye
+                                p.quarter(game="Cq4")
+                                    span.playoffplayer(seed="7",player="") Bye
+                                    span  vs 
+                                    span.playoffplayer(seed="2",player="") Bye
+                            .col-4
+                                p.semi(game='Cs2')
+                                    span.playoffplayer(winner="Cq3",player="Cq3") Q3
+                                    span  vs 
+                                    span.playoffplayer(winner="Cq4",player="Cq4") Q4
+                            .col-4
+                                p.place3(game="C3p")
+                                    span.playoffplayer(winner="Cl1",player="Cl1") L1
+                                    span  vs 
+                                    span.playoffplayer(winner="Cl2",player="Cl2") L2
+                                p(style='font-size:10px;text-align:center') 3rd Place
+
+                                
+                    table.statstable.table.table-sm.stattablemaster
+                        thead
+                            tr
+                                th.tabgroupname(colspan=4,style='text-align:center') Group 1
+                            tr
+                                th #
+                                th Name
+                                th W/D/L
+                                th Pts
+                        tbody
+                    .stattablediv
+        .col-3.standings(division="D",style="display:none")
+            .card
+                .card-header
+                    h5 Div D - Advanced
+                .card-body
+                    p.message.text-center QUALIFIERS
+                    p.text-center.launchplayoffs(style='display:none'): button.btn.btn-sm.btn-info Launch 
+                        i.fas.fa-play-circle
+                    .gameblocks(phase="active",division="D")
+
+                    .playoffs(style="display:none")
+                        .row(style='font-size:10px;text-align:center')
+                            .col-4
+                                p Quarter
+                            .col-4
+                                p Semi-finals
+                            .col-4
+                                p Finals
+                        .row
+                            .col-4
+                                p.quarter(game="Dq1")
+                                    span.playoffplayer(seed="1",player="") Bye
+                                    span  vs 
+                                    span.playoffplayer(seed="8",player="") Bye
+                                p.quarter(game="Dq2")
+                                    span.playoffplayer(seed="5",player="") Bye
+                                    span  vs 
+                                    span.playoffplayer(seed="4",player="") Bye
+                            .col-4
+                                p.semi(game="Ds1")
+                                    span.playoffplayer(winner='Dq1',player="Dq1") Q1
+                                    span  vs 
+                                    span.playoffplayer(winner="Dq2",player="Dq2") Q2
+                            .col-4
+                                p.final(game="Df")
+                                    span.playoffplayer(winner="Ds1",player="Ds1") S1
+                                    span  vs 
+                                    span.playoffplayer(winner="Ds2",player="Ds2") S2
+                        .row
+                            .col-4
+                                p.quarter(game="Dq3") 
+                                    span.playoffplayer(seed="6",player="") Bye
+                                    span  vs 
+                                    span.playoffplayer(seed="3",player="") Bye
+                                p.quarter(game="Dq4")
+                                    span.playoffplayer(seed="7",player="") Bye
+                                    span  vs 
+                                    span.playoffplayer(seed="2",player="") Bye
+                            .col-4
+                                p.semi(game='Ds2')
+                                    span.playoffplayer(winner="Dq3",player="Dq3") Q3
+                                    span  vs 
+                                    span.playoffplayer(winner="Dq4",player="Dq4") Q4
+                            .col-4
+                                p.place3(game="D3p")
+                                    span.playoffplayer(winner="Dl1",player="Dl1") L1
+                                    span  vs 
+                                    span.playoffplayer(winner="Dl2",player="Dl2") L2
+                                p(style='font-size:10px;text-align:center') 3rd Place
+
+                                
+                    table.statstable.table.table-sm.stattablemaster
+                        thead
+                            tr
+                                th.tabgroupname(colspan=4,style='text-align:center') Group 1
+                            tr
+                                th #
+                                th Name
+                                th W/D/L
+                                th Pts
+                        tbody
+                    .stattablediv
+#playermodal.modal
+    .modal-dialog
+        .modal-content
+            .modal-header
+                h5.modal-title Player details
+                button.btn-close(type="button",data-bs-dismiss="modal",aria-label="Close")
+            .modal-body
+                label.form-label(for="playername") Player name
+                input#playername.form-control(type="test")
+            .modal-footer
+                button.btn.btn-secondary(type="button",data-bs-dismiss="modal") Close
+                button#saveplayer.btn.btn-primary(type="button") Save
+
+.col-3.groupmaster.playergroup(group="1",style="display:none")
+    .card
+        .card-header
+            h5
+                span.grouptitle Group 1
+                  
+                i.deletegroup.fas.fa-trash(style="display:none;margin-left:10px")
+        .card-body
+            .playerlist
+            p: i.addplayer.fas.fa-plus-circle
