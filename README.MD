@@ -6,11 +6,14 @@ Chessmate is a chess tournament application to run round robin tourmanents follo
 ### Installation
 
 Download the repository from github into a folder of your choice.
+Open the index.html file in a browser. This should put in cache some libraries used.
 
 
 ### Launch
 
 Open the index.html file in Google Object
+
+> If you use the same browser then the one you used for dowload, the libraries are cached and you should be able to use the app without internet
 
 
 ### What the app does
